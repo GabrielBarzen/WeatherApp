@@ -5,14 +5,17 @@ import Statistics from "../views/Statistics.vue"
 import Achievements from "../views/Achievements.vue"
 import Settings from "../views/Settings.vue"
 
+const routes = [
+    {path: "/", name: "Home", component: Home},
+    {path: "/statistics", name: "Statistics", component: Statistics},
+    {path: "/achievements", name: "Achievements", component: Achievements},
+    {path: "/settings", name: "Settings", component: Settings}
+]
+
 const router = createRouter({
     history: createWebHistory(),
-    routes: [
-        {path: "/", name: "Home", component: Home},
-        {path: "/statistics", name: "Statistics", component: Statistics},
-        {path: "/achievements", name: "Achievements", component: Achievements},
-        {path: "/settings", name: "Settings", component: Settings}
-    ]
+    routes: routes,
+    linkActiveClass: "bg-gray-900 text-white"
 })
 
 export default router
