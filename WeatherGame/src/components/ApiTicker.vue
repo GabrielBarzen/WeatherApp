@@ -7,7 +7,9 @@
     let previousTime = null;
     let enabled = ref(true);
     let intervalID;
+    let currentWeatherObj = null;
 
+    toggleTicker();
     function toggleTicker() {
         console.log(enabled)
         console.log("Enabling : " + ref(enabled))
@@ -64,10 +66,27 @@
     function apiRequestSuccess(data) {
         previousTime = Date.now();
         let jsonData = JSON.parse(data.request.response);
-        let now = jsonData.timeSeries[2];
-        let temp = now.parameters[10];
-        console.log(now)
-        console.log(temp);
+        //let now = jsonData.timeSeries[2];
+        const timeWithinHour = jsonData.timeSeries.filter((item) => {
+            return Date.parse(item.validTime) - Date.now() < 6000000
+        })
+        console.log("NOW====")
+        const currentTimeParameters = timeWithinHour[timeWithinHour.length-1]
+        console.log(currentTimeParameters)
+        console.log("======")
+
+        let tempData = currentTimeParameters.parameters[10];
+        let airPressureData = currentTimeParameters.parameters[11];
+
+        let weather = {};
+        let temp = {value:tempData.values[0] , unit:tempData.unit }
+        let airPressure = {value:airPressureData.values[0] , unit:airPressureData.unit }
+        
+        weather.temp = temp;
+        weather.airPressure = airPressure;
+
+        console.log(weather)
+        currentWeatherObj = weather;
     }
 
     function getDistanceFromLatLonInKm(latitudeFrom,longitudeFrom,latitudeTo,longitudeTo) {
