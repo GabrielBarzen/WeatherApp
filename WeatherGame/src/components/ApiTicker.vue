@@ -112,7 +112,7 @@
 
 </script>
 <template>
-        <span @click="enabled = !enabled; toggleTicker();" aria-current="page" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">
+    <span @click="enabled = !enabled; toggleTicker();" aria-current="page" :class="{ 'text-green-500' : enabled }, { 'text-red-500' : !enabled } " class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">
             Tracking : 
             <span v-if="enabled">Enabled</span>
             <span v-else>Disabled</span>
