@@ -54,10 +54,13 @@
     }
 
     function makeApiRequest(currentLatitude, currentLongitude) {
-        
+        //External API only takes 6 decimals for lat and lon parameters
+        var lon = currentLongitude.toFixed(6);
+        var lat = currentLatitude.toFixed(6);
+
         axios({
             method: "get",
-            url: `https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/${currentLongitude}/lat/${currentLatitude}/data.json`
+            url: `https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/${lon}/lat/${lat}/data.json`
         }).then((data) => apiRequestSuccess(data));
     }
 
