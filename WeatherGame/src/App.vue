@@ -6,7 +6,6 @@
 <template>
     <Navigation />
     <main class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-        <p>Vue is running</p>
         <router-view />
     </main>
     <Footer class="absolute inset-x-0 bottom-0 h-16" />
