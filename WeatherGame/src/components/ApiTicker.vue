@@ -1,12 +1,24 @@
 <script setup>
-import axios from 'axios';
+    import axios from 'axios';
+    import {ref} from 'vue';
 
 
-    var previousLocation = null;
-    var previousTime = null;
-    //var intervalID = window.setInterval(tickWeatherApi,15000);
-    tickWeatherApi();
+    let previousLocation = null;
+    let previousTime = null;
+    let enabled = ref(true);
+    let intervalID;
 
+    function toggleTicker() {
+        console.log(enabled)
+        console.log("Enabling : " + ref(enabled))
+        if (enabled.value == true) {
+            console.log("starting ticker")
+            intervalID = window.setInterval(tickWeatherApi,15000);
+        } else {
+            console.log("stopping ticker")
+            window.clearInterval(intervalID);
+        }
+    }
     
     function tickWeatherApi() {
         navigator.geolocation.getCurrentPosition(success => checkWeatherApiRequest(success), (error) => console.log(error));   
@@ -18,10 +30,10 @@ import axios from 'axios';
         previousLocation = success;
         console.log(success)
         if (previousTime === null || previousLocation === null) {
-            var previousLocation = currentLocation;
+            previousLocation = currentLocation;
             makeApiRequest(currentLocation.coords.latitude,currentLocation.coords.longitude);
         } else if ((currentTime - previousTime) > 60000) {
-            var previousLocation = currentLocation;
+            previousLocation = currentLocation;
             makeApiRequest(currentLocation.coords.latitude,currentLocation.coords.longitude);
         } else {
             var previousCoord = previousLocation.coords;
@@ -35,7 +47,7 @@ import axios from 'axios';
                 currentCoord.longitude)
             console.log(distanceInKm)
             if (distanceInKm > 1) {
-                var previousLocation = currentLocation;
+                previousLocation = currentLocation;
                 makeApiRequest(currentLocation.coords.latitude,currentLocation.coords.longitude);
             }
         }
@@ -100,7 +112,9 @@ import axios from 'axios';
 
 </script>
 <template>
-    <div>
-        
-    </div>
+        <span @click="enabled = !enabled; toggleTicker();" aria-current="page" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">
+            Tracking : 
+            <span v-if="enabled">Enabled</span>
+            <span v-else>Disabled</span>
+        </span>
 </template>
