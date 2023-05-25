@@ -1,23 +1,20 @@
 <script setup>
     import axios from 'axios';
     import {ref} from 'vue';
-
+    const emit = defineEmits(["weather"])
 
     let previousLocation = null;
     let previousTime = null;
     let enabled = ref(true);
     let intervalID;
     let currentWeatherObj = null;
-
     toggleTicker();
     function toggleTicker() {
-        console.log(enabled)
-        console.log("Enabling : " + ref(enabled))
         if (enabled.value == true) {
-            console.log("starting ticker")
-            intervalID = window.setInterval(tickWeatherApi,15000);
+            //intervalID = window.setInterval(tickWeatherApi,15000);
+            tickWeatherApi()
+            
         } else {
-            console.log("stopping ticker")
             window.clearInterval(intervalID);
         }
     }
@@ -30,7 +27,6 @@
         let currentTime = Date.now();
         let currentLocation = success;
         previousLocation = success;
-        console.log(success)
         if (previousTime === null || previousLocation === null) {
             previousLocation = currentLocation;
             makeApiRequest(currentLocation.coords.latitude,currentLocation.coords.longitude);
@@ -40,8 +36,6 @@
         } else {
             var previousCoord = previousLocation.coords;
             var currentCoord = currentLocation.coords;
-            console.log(previousLocation)
-            console.log(currentLocation)
             var distanceInKm = getDistanceFromLatLonInKm(
                 previousCoord.latitude,
                 previousCoord.longitude,
@@ -87,6 +81,8 @@
 
         console.log(weather)
         currentWeatherObj = weather;
+        
+        emit('weather',currentWeatherObj);
     }
 
     function getDistanceFromLatLonInKm(latitudeFrom,longitudeFrom,latitudeTo,longitudeTo) {
@@ -131,9 +127,9 @@
 
 </script>
 <template>
-    <span @click="enabled = !enabled; toggleTicker();" aria-current="page" :class="{ 'text-green-500' : enabled }, { 'text-red-500' : !enabled } " class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">
-            Tracking : 
-            <span v-if="enabled">Enabled</span>
-            <span v-else>Disabled</span>
-        </span>
+    <!-- <span @click="enabled = !enabled; toggleTicker();" aria-current="page" :class="{ 'text-green-500' : enabled }, { 'text-red-500' : !enabled } " class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"> -->
+    <!--         Tracking :  -->
+    <!--         <span v-if="enabled">Enabled</span> -->
+    <!--         <span v-else>Disabled</span> -->
+    <!-- </span> -->
 </template>
