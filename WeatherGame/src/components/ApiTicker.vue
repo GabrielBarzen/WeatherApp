@@ -12,7 +12,6 @@
     function toggleTicker() {
         if (enabled.value == true) {
             intervalID = window.setInterval(tickWeatherApi,15000);
-            
         } else {
             window.clearInterval(intervalID);
         }
