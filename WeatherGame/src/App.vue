@@ -1,7 +1,6 @@
 <script setup>
     import Navigation from "./components/Navigation.vue"
     import Footer from "./components/Footer.vue"
-    import ApiTicker from "./components/ApiTicker.vue"
 </script>
 
 <template>
