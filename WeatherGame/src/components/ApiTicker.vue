@@ -12,14 +12,16 @@
     tickWeatherApi();
     function toggleTicker() {
         if (enabled.value == true) {
-            intervalID = window.setInterval(tickWeatherApi,15000);
+            intervalID = window.setInterval(tickWeatherApi,100000);
         } else {
             window.clearInterval(intervalID);
         }
     }
     
     function tickWeatherApi() {
-        navigator.geolocation.getCurrentPosition(success => checkWeatherApiRequest(success), (error) => console.log(error));   
+        navigator.geolocation.getCurrentPosition(
+            (success) => checkWeatherApiRequest(success), 
+            (error) => geoLocationError(error));   
     }
 
     function checkWeatherApiRequest(success) {
@@ -29,7 +31,7 @@
         if (previousTime === null || previousLocation === null) {
             previousLocation = currentLocation;
             makeApiRequest(currentLocation.coords.latitude,currentLocation.coords.longitude);
-        } else if ((currentTime - previousTime) > 60000) {
+        } else if ((currentTime - previousTime) > 600000) {
             previousLocation = currentLocation;
             makeApiRequest(currentLocation.coords.latitude,currentLocation.coords.longitude);
         } else {
@@ -56,35 +58,24 @@
         axios({
             method: "get",
             url: `https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/${lon}/lat/${lat}/data.json`
-        }).then((data) => apiRequestSuccess(data));
+        })
+        .catch((error) => apiRequestError(error))
+        .then((data) => apiRequestSuccess(data));
+    }
+    function geoLocationError(error) {
+        let errorData = {}
+        errorData.message = error;
+        console.log("===error===")
+        console.log(error)
+        emit('weather', errorData);
     }
 
-    function apiRequestSuccess(data) {
-        previousTime = Date.now();
-        let jsonData = JSON.parse(data.request.response);
-        //let now = jsonData.timeSeries[2];
-        const timeWithinHour = jsonData.timeSeries.filter((item) => {
-            return Date.parse(item.validTime) - Date.now() < 6000000
-        })
-        console.log("NOW====")
-        const currentTimeParameters = timeWithinHour[timeWithinHour.length-1]
-        console.log(currentTimeParameters)
-        console.log("======")
-
-        let tempData = currentTimeParameters.parameters[10];
-        let airPressureData = currentTimeParameters.parameters[11];
-
-        let weather = {};
-        let temperature = {value:tempData.values[0] , unit:tempData.unit }
-        let airPressure = {value:airPressureData.values[0] , unit:airPressureData.unit }
-        
-        weather.temperature = temperature;
-        weather.airPressure = airPressure;
-
-        console.log(weather)
-        currentWeatherObj = weather;
-        
-        emit('weather',currentWeatherObj);
+    function apiRequestError(error) {
+        let errorData = {}
+        errorData.message = error;
+        console.log("===error===")
+        console.log(error)
+        emit('weather', errorData);
     }
 
     function getDistanceFromLatLonInKm(latitudeFrom,longitudeFrom,latitudeTo,longitudeTo) {
@@ -107,25 +98,65 @@
     function degreeToRadian(degree) {
       return degree * (Math.PI/180)
     }
-// msl 	hPa 	hmsl 	0 	Air pressure 	Decimal number, one decimal
-// t 	C 	hl 	2 	Air temperature 	Decimal number, one decimal
-// vis 	km 	hl 	2 	Horizontal visibility 	Decimal number, one decimal
-// wd 	degree 	hl 	10 	Wind direction 	Integer
-// ws 	m/s 	hl 	10 	Wind speed 	Decimal number, one decimal
-// r 	% 	hl 	2 	Relative humidity 	Integer, 0-100
-// tstm 	% 	hl 	0 	Thunder probability 	Integer, 0-100
-// tcc_mean 	octas 	hl 	0 	Mean value of total cloud cover 	Integer, 0-8
-// lcc_mean 	octas 	hl 	0 	Mean value of low level cloud cover 	Integer, 0-8
-// mcc_mean 	octas 	hl 	0 	Mean value of medium level cloud cover 	Integer, 0-8
-// hcc_mean 	octas 	hl 	0 	Mean value of high level cloud cover 	Integer, 0-8
-// gust 	m/s 	hl 	10 	Wind gust speed 	Decimal number, one decimal
-// pmin 	mm/h 	hl 	0 	Minimum precipitation intensity 	Decimal number, one decimal
-// pmax 	mm/h 	hl 	0 	Maximum precipitation intensity 	Decimal number, one decimal
-// spp 	% 	hl 	0 	Percent of precipitation in frozen form 	Integer, -9 or 0-100
-// pcat 	category 	hl 	0 	Precipitation category 	Integer, 0-6
-// pmean 	mm/h 	hl 	0 	Mean precipitation intensity 	Decimal number, one decimal
-// pmedian 	mm/h 	hl 	0 	Median precipitation intensity 	Decimal number, one decimal
-// Wsymb2 	code 	hl 	0 	Weather symbol 	Integer, 1-27
+    function apiRequestSuccess(data) {
+        previousTime = Date.now();
+        let jsonData = JSON.parse(data.request.response);
+        //let now = jsonData.timeSeries[2];
+        const timeWithinHour = jsonData.timeSeries.filter((item) => {
+            return Date.parse(item.validTime) - Date.now() < 6000000
+        })
+        console.log("NOW====")
+        const currentTimeParameters = timeWithinHour[timeWithinHour.length-1]
+        console.log(currentTimeParameters)
+        console.log("======")
+        processTimeParameters(currentTimeParameters);
+    }
+
+    function processTimeParameters(currentTimeParameters) {
+        let tempData = currentTimeParameters.parameters[10];
+        let airPressureData = currentTimeParameters.parameters[11];
+        let weatherSymbolIntegerData = currentTimeParameters.parameters[18];
+        let windSpeedData = currentTimeParameters.parameters[14]
+        let windDirectionData = currentTimeParameters.parameters[13]
+
+        let weather = {};
+        let temperature = {value:tempData.values[0] , unit:tempData.unit }
+        let airPressure = {value:airPressureData.values[0] , unit:airPressureData.unit }
+        let weatherSymbolInteger = {value:weatherSymbolIntegerData.values[0] , unit:weatherSymbolIntegerData.unit }
+        let windSpeed = {value:windSpeedData.values[0] , unit:windSpeedData.unit }
+        let windDirection = {value:windDirectionData.values[0] , unit:windDirectionData.unit }
+        
+        weather.temperature = temperature;
+        weather.airPressure = airPressure;
+        weather.weatherSymbolInteger = weatherSymbolInteger;
+        weather.windSpeed = windSpeed;
+        weather.windDirection = windDirection;
+
+        console.log(weather);
+        currentWeatherObj = weather;
+        
+        emit('weather',currentWeatherObj);
+    }
+
+// 0 : Object { name: "spp"     , Percent of precipitation in frozen form
+// 1 : Object { name: "pcat"    , Precipitation category Integer
+// 2 : Object { name: "pmin"    , Minimum precipitation intensity
+// 3 : Object { name: "pmean"   , Mean precipitation intensity
+// 4 : Object { name: "pmax"    , Maximum precipitation intensity
+// 5 : Object { name: "pmedian" , Median precipitation intensity
+// 6 : Object { name: "tcc_mean", Mean value of total cloud cover
+// 7 : Object { name: "lcc_mean", Mean value of low level cloud cover
+// 8 : Object { name: "mcc_mean", Mean value of mediul level cloud cover
+// 9 : Object { name: "hcc_mean", Mean value of high level cloud cover
+// 10: Object { name: "t"       , temperature
+// 11: Object { name: "msl"     , Air pressure
+// 12: Object { name: "vis"     , Horizontal visibility
+// 13: Object { name: "wd"      , Wind direction Degree
+// 14: Object { name: "ws"      , Wind speed
+// 15: Object { name: "r"       , Relative Humidity
+// 16: Object { name: "tstm"    , Thunder probability
+// 17: Object { name: "gust"    , Wind gust speed, one dcimal
+// 18: Object { name: "Wsymb2"  , Weather symbol integer
 
 </script>
 <template>
