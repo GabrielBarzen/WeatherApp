@@ -9,6 +9,7 @@
     let intervalID;
     let currentWeatherObj = null;
     toggleTicker();
+    tickWeatherApi();
     function toggleTicker() {
         if (enabled.value == true) {
             intervalID = window.setInterval(tickWeatherApi,15000);
@@ -48,10 +49,13 @@
     }
 
     function makeApiRequest(currentLatitude, currentLongitude) {
-        
+        //External API only takes 6 decimals for lat and lon parameters
+        var lon = currentLongitude.toFixed(6);
+        var lat = currentLatitude.toFixed(6);
+
         axios({
             method: "get",
-            url: `https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/${currentLongitude}/lat/${currentLatitude}/data.json`
+            url: `https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/${lon}/lat/${lat}/data.json`
         }).then((data) => apiRequestSuccess(data));
     }
 
@@ -71,10 +75,10 @@
         let airPressureData = currentTimeParameters.parameters[11];
 
         let weather = {};
-        let temp = {value:tempData.values[0] , unit:tempData.unit }
+        let temperature = {value:tempData.values[0] , unit:tempData.unit }
         let airPressure = {value:airPressureData.values[0] , unit:airPressureData.unit }
         
-        weather.temp = temp;
+        weather.temperature = temperature;
         weather.airPressure = airPressure;
 
         console.log(weather)

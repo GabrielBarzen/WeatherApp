@@ -13,7 +13,6 @@
 <template>
     <Navigation />
     <main class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-        <p>Vue is running</p>
         <router-view :weather="weatherData" />
     </main>
     <ApiTicker  @weather="updateWeather"></ApiTicker>
