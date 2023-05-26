@@ -10,6 +10,8 @@
         // { name: 'Settings', to: "/settings", current: false },
     ]
 
+    //intervalID = window.setInterval(emit('weather',weather),60000);
+
 </script>
 
 <template>
@@ -37,8 +39,8 @@
                     </div>
                     </div>
                 </div>
+                    <!-- <ApiTicker/> -->
                 <div class="absolute inset-y-0 right-0 flex items-center pr-2 md:static md:inset-auto md:ml-6 md:pr-0">
-                    <ApiTicker class="hidden md:block"/>
                     <router-link type="button" to="/settings" class="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none">
                         <Cog6ToothIcon class="h-6 w-6" aria-hidden="true"/>
                     </router-link>

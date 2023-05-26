@@ -6,7 +6,7 @@ import Achievements from "../views/Achievements.vue"
 import Settings from "../views/Settings.vue"
 
 const routes = [
-    {path: "/", name: "Home", component: Home},
+    {path: "/", name: "Home", component: Home, props:true},
     {path: "/statistics", name: "Statistics", component: Statistics},
     {path: "/achievements", name: "Achievements", component: Achievements},
     {path: "/settings", name: "Settings", component: Settings}

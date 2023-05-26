@@ -1,4 +1,20 @@
 <script setup>
+    import { ref, watch } from 'vue'
+    const props = defineProps(['weather'])
+    watch(props,(oldval,newval) => {
+        console.log(props.weather.weatherSymbolInteger.value)
+        console.log(`@/assets/${props.weather.weatherSymbolInteger.value}.png`)
+        console.log(img)
+        let imageInteger = props.weather.weatherSymbolInteger.value
+        img = new URL('../assets/'+imageInteger+'.png', import.meta.url).href;
+        condition = conditions[props.weather.weatherSymbolInteger.value]
+        console.log(img)
+        windDirection = convertWindDirection(props.weather.windDirection.value)
+
+    }) 
+</script>
+
+<script>
     import DesktopWarning from "../components/DesktopWarning.vue"
 
     let conditions = {
@@ -45,20 +61,25 @@
     let condition = conditions[conditionValue];
     let windSpeed = 2;
     let windSpeedUnit = "m/s";
-    let windDirectionDegrees = 321;
+    let windDirectionDegrees = 0;
     let windDirection = convertWindDirection(windDirectionDegrees);
-    let img = "https://www.smhi.se/polopoly_fs/1.12110.1518507377!/image/9.png_gen/derivatives/Original_259px/image/9.png";
+    let img = new URL(`@/assets/1.png`, import.meta.url).href
 </script>
 
 <template>
-    <div id="weather-content" class="relative mt-40 flex flex-col justify-center items-center content-center">
+
+    <div v-if="props.weather.temperature != null" id="weather-content" class="relative mt-40 flex flex-col justify-center items-center content-center">
         <div id="location" class="text-2xl">
             {{ location }}
         </div>
 
-        <div id="temperature-container" class="mt-2 mb-3">
-            <span id="temperature" class="text-8xl">{{ temperature }}</span>
-            <span id="temperature-unit" class="text-8xl">°{{ tempUnit }}</span>
+        <div id="temperature-container" class="mt-2 mb-3" >
+            <span id="temperature" class="text-8xl">
+                <span>{{ props.weather.temperature.value }}</span>
+            </span>
+            <span id="temperature-unit" class="text-8xl">
+                <span>°{{ props.weather.temperature.unit }}</span>
+            </span>
         </div>
 
         <div id="condition" class="text-xl">
@@ -66,16 +87,18 @@
         </div>
 
         <div id="wind-container" class="my-1">
-            <span id="wind-speed">{{ windSpeed }}</span>
-            <span id="wind-speed-unit" class="ml-0.5 mr-1">{{ windSpeedUnit }}</span>
-            <span id="wind-direction">{{ windDirection }}</span>
+            <span id="wind-speed">{{ props.weather.windSpeed.value }}</span>
+            <span id="wind-speed-unit" class="ml-0.5 mr-1">{{ props.weather.windSpeed.unit }}</span>
+            <span id="wind-direction" > {{ windDirection }}</span>
         </div>
 
-        <img id="weather-img" class="w-24 mt-2" :src="img" />
+        <img id="weather-img" class="w-24 mt-2"  :src="img" />
+    </div>
+    <div v-else id="loading-container" class="relative mt-40 flex flex-col justify-center items-center content-center">
+        <span id="Loading" class="text-8xl">
+            LOADING
+        </span>
     </div>
     <DesktopWarning class="absolute bottom-36 right-20"/>
-
 </template>
 
-<style scoped>
-</style>
