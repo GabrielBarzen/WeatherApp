@@ -8,7 +8,6 @@
         weatherData.value = data;
     }
     let weatherData = ref({});
-    
 </script>
 
 <template>
