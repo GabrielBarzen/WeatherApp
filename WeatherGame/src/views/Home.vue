@@ -7,6 +7,7 @@
         console.log(img)
         let imageInteger = props.weather.weatherSymbolInteger.value
         img = new URL('../assets/'+imageInteger+'.png', import.meta.url).href;
+        condition = conditions[props.weather.weatherSymbolInteger.value]
         console.log(img)
         windDirection = convertWindDirection(props.weather.windDirection.value)
 

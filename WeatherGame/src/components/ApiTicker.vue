@@ -118,6 +118,7 @@
         let weatherSymbolIntegerData = currentTimeParameters.parameters[18];
         let windSpeedData = currentTimeParameters.parameters[14]
         let windDirectionData = currentTimeParameters.parameters[13]
+        let percipitationCategoryData = currentTimeParameters.parameters[1]
 
         let weather = {};
         let temperature = {value:tempData.values[0] , unit:tempData.unit }
@@ -125,12 +126,14 @@
         let weatherSymbolInteger = {value:weatherSymbolIntegerData.values[0] , unit:weatherSymbolIntegerData.unit }
         let windSpeed = {value:windSpeedData.values[0] , unit:windSpeedData.unit }
         let windDirection = {value:windDirectionData.values[0] , unit:windDirectionData.unit }
-        
+        let percipitationCategory = {value:percipitationCategoryData.values[0],unit:percipitationCategoryData.unit}
+
         weather.temperature = temperature;
         weather.airPressure = airPressure;
         weather.weatherSymbolInteger = weatherSymbolInteger;
         weather.windSpeed = windSpeed;
         weather.windDirection = windDirection;
+        weather.percipitationCategory = percipitationCategory
 
         console.log(weather);
         currentWeatherObj = weather;
