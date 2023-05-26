@@ -53,11 +53,24 @@
         return arr[(val % 16)];
     }
 
+
+    function displayTemp(unit, temp) {
+        if (unit == "Cel" || unit == "C") {
+            return temp;
+
+        } else if (unit == "Far" || unit == "F") {
+            let farTemp = (temp * (9/5)) + 32;
+            return farTemp;    
+
+        } else {
+            throw new Error('Wrong unit. Only C, Cel, F or Far allowed');
+        }
+    }
+
     let conditionValue = 8;
 
-    let temperature = 24;
-    let tempUnit = "C";
-    let location = "Ystad";
+    let tempUnit = localStorage["tempUnit"];
+    let location = "[Not working]";
     let condition = conditions[conditionValue];
     let windSpeed = 2;
     let windSpeedUnit = "m/s";
@@ -75,10 +88,10 @@
 
         <div id="temperature-container" class="mt-2 mb-3" >
             <span id="temperature" class="text-8xl">
-                <span>{{ props.weather.temperature.value }}</span>
+                <span>{{ displayTemp(tempUnit, props.weather.temperature.value) }}</span>
             </span>
             <span id="temperature-unit" class="text-8xl">
-                <span>°{{ props.weather.temperature.unit }}</span>
+                <span>°{{ tempUnit }}</span>
             </span>
         </div>
 
