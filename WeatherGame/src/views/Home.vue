@@ -61,9 +61,18 @@
             {{ location }}
         </div>
 
-        <div id="temperature-container" class="mt-2 mb-3">
-            <span id="temperature" class="text-8xl"><span v-if="props.weather.temperature != null" >{{ props.weather.temperature.value }}</span></span>
-            <span id="temperature-unit" class="text-8xl"><span v-if="props.weather.temperature != null" >°{{ props.weather.temperature.unit }}</span></span>
+        <div id="temperature-container" class="mt-2 mb-3" v-if="props.weather.temperature != null" >
+            <span id="temperature" class="text-8xl">
+                <span>{{ props.weather.temperature.value }}</span>
+            </span>
+            <span id="temperature-unit" class="text-8xl">
+                <span>°{{ props.weather.temperature.unit }}</span>
+            </span>
+        </div>
+        <div v-else id="loading-container" class="mt-2 mb-3">
+            <span id="Loading" class="text-8xl">
+                LOADING
+            </span>
         </div>
 
         <div id="condition" class="text-xl">
