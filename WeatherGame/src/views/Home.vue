@@ -62,8 +62,8 @@
         </div>
 
         <div id="temperature-container" class="mt-2 mb-3">
-            <span id="temperature" class="text-8xl">{{ props.weather.temperature.value }}</span>
-            <span id="temperature-unit" class="text-8xl">°{{ tempUnit }}</span>
+            <span id="temperature" class="text-8xl"><span v-if="props.weather.temperature != null" >{{ props.weather.temperature.value }}</span></span>
+            <span id="temperature-unit" class="text-8xl"><span v-if="props.weather.temperature != null" >°{{ props.weather.temperature.unit }}</span></span>
         </div>
 
         <div id="condition" class="text-xl">
