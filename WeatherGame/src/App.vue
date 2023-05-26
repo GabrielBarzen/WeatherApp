@@ -3,6 +3,11 @@
     import Navigation from "./components/Navigation.vue"
     import Footer from "./components/Footer.vue"
     import ApiTicker from "./components/ApiTicker.vue"
+
+    if (localStorage["tempUnit"] == null) {
+        localStorage["tempUnit"] = "C";
+    }
+    
     function updateWeather(data) {
         console.log("UPDATING WEATHER");
         weatherData.value = data;
