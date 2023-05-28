@@ -123,14 +123,14 @@
         let frozenPercipitationPercentageData = currentTimeParameters.parameters[0];
 
         let weather = {};
-        let temperature = {value:tempData.values[0] , unit:tempData.unit };
-        let airPressure = {value:airPressureData.values[0] , unit:airPressureData.unit };
-        let weatherSymbolInteger = {value:weatherSymbolIntegerData.values[0] , unit:weatherSymbolIntegerData.unit };
-        let windSpeed = {value:windSpeedData.values[0] , unit:windSpeedData.unit };
-        let windDirection = {value:windDirectionData.values[0] , unit:windDirectionData.unit };
-        let percipitationCategory = {value:percipitationCategoryData.values[0],unit:percipitationCategoryData.unit};
-        let horizontalVisibility = {value:horizontalVisibilityData.values[0], unit:horizontalVisibilityData.unit};
-        let frozenPercipitationPercentage = {value:frozenPercipitationPercentageData.values[0], unit:frozenPercipitationPercentageData.unit};
+        let temperature = {value:tempData.values[0] , unit:tempData.unit, name:"Temperature" };
+        let airPressure = {value:airPressureData.values[0] , unit:airPressureData.unit, name:"Air pressure" };
+        let weatherSymbolInteger = {value:weatherSymbolIntegerData.values[0] , unit:weatherSymbolIntegerData.unit ,name:"Weather symbol"};
+        let windSpeed = {value:windSpeedData.values[0] , unit:windSpeedData.unit, name:"Wind speed"};
+        let windDirection = {value:windDirectionData.values[0] , unit:windDirectionData.unit, name:"Wind direction" };
+        let percipitationCategory = {value:percipitationCategoryData.values[0],unit:percipitationCategoryData.unit, name:"Weather category"};
+        let horizontalVisibility = {value:horizontalVisibilityData.values[0], unit:horizontalVisibilityData.unit, name:"Horizontal visibility"};
+        let frozenPercipitationPercentage = {value:frozenPercipitationPercentageData.values[0], unit:frozenPercipitationPercentageData.unit, name:"Hail percentage"};
 
         weather.temperature = temperature;
         weather.airPressure = airPressure;
@@ -140,25 +140,16 @@
         weather.percipitationCategory = percipitationCategory;
         weather.horizontalVisibility = horizontalVisibility;
         weather.frozenPercipitationPercentage = frozenPercipitationPercentage
+        weather.time = currentTimeParameters.validTime;
 
         currentWeatherObj = weather;
         
-        let dateTime = currentTimeParameters.validTime;
-        storeWeatherData(dateTime, currentWeatherObj);
 
         printLocalStorageSize()
         
         emit('weather',currentWeatherObj);
     }
 
-    function storeWeatherData(dateTime, data) {
-        let localStorageHistory = {};
-
-        localStorageHistory = JSON.parse(localStorage["weatherHistory"]);
-
-        localStorageHistory[dateTime] = data;
-        localStorage["weatherHistory"] = JSON.stringify(localStorageHistory);
-    }
 
 
     function printLocalStorageSize() {
