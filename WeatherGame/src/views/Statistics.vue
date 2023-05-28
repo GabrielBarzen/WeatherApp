@@ -58,8 +58,6 @@
     let entries = Object.entries(history);
     
     entries.forEach(element => {
-        console.log("ITEM")
-        console.log(element)
         if (element[1].temperature.value < tempHistoricLow) tempHistoricLow = element[1].temperature.value;
         if (element[1].temperature.value > tempHistoricHigh) tempHistoricHigh = element[1].temperature.value;
     });
@@ -81,15 +79,13 @@
 </script>
 
 <template>
-    <h1 class="text-2xl p-2">Statistics</h1>
+    <h1 class="text-2xl p-2" >Statistics</h1>
     <div id="stats-container" class="p-2">
         <div id="temp-box" v-for="item in printStatistics">
             <ul id="temp-list" class="p-3 bg-gray-700 m-1 rounded text-xl">
                 <li id="highest-temp" class=" flex justify-between">
                     <span>{{item.name}}:     </span>
                     <span>{{item.value}} {{item.unit}}</span>
-                    
-
                 </li>
             </ul>
         </div>
