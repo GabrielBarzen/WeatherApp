@@ -1,5 +1,5 @@
 <script setup>
-    import {ref} from 'vue';
+    import {ref, watch} from 'vue';
     //
     // let tempUnit = localStorage["tempUnit"];
     // let stats = {};
@@ -35,6 +35,10 @@
     //
     // localStorage.setItem("stats",JSON.stringify(stats));
     // const statistics = ref(localStorage.getItem("stats"));
+    // {"value":14.9,"unit":"Cel","name":"Temperature"}
+
+    //{"temperature":{"value":14.9,"unit":"Cel","name":"Temperature"},"airPressure":{"value":1021.5,"unit":"hPa","name":"Air pressure"},"weatherSymbolInteger":{"value":1,"unit":"category","name":"Weather symbol"},"windSpeed":{"value":4.7,"unit":"m/s","name":"Wind speed"},"windDirection":{"value":313,"unit":"degree","name":"Wind direction"},"percipitationCategory":{"value":0,"unit":"category","name":"Weather category"},"horizontalVisibility":{"value":65,"unit":"km","name":"Horizontal visibility"},"frozenPercipitationPercentage":{"value":-9,"unit":"percent","name":"Hail percentage"},"time":"2023-05-28T16:00:00Z"}
+
     const statistics = JSON.parse(localStorage.getItem("stats"))
     let printStatistics = statistics;
 
@@ -45,7 +49,33 @@
         }
         return true;
     })
-    printStatistics = ref(Object.fromEntries(printStatistics));
+
+    let history = JSON.parse(localStorage.getItem("weatherHistory"));
+    console.log(history)
+    printStatistics = Object.fromEntries(printStatistics);
+    let tempHistoricLow = Number.MAX_VALUE;
+    let tempHistoricHigh = Number.MIN_VALUE;
+    let entries = Object.entries(history);
+    
+    entries.forEach(element => {
+        console.log("ITEM")
+        console.log(element)
+        if (element[1].temperature.value < tempHistoricLow) tempHistoricLow = element[1].temperature.value;
+        if (element[1].temperature.value > tempHistoricHigh) tempHistoricHigh = element[1].temperature.value;
+    });
+ 
+    printStatistics.tempHistoricLow = {
+        name:"Temperature historical low",
+        unit:printStatistics.temperature.unit,
+        value:tempHistoricLow,
+    }
+    printStatistics.tempHistoricHigh = {
+        name:"Temperature historical High",
+        unit:printStatistics.temperature.unit,
+        value:tempHistoricHigh,
+    }
+
+    printStatistics = ref(printStatistics);
 
     console.log("=========")
 </script>
@@ -60,9 +90,6 @@
                     <span>{{item.value}} {{item.unit}}</span>
                     
 
-                    <!-- <span class="text">Highest achieved temperature:</span> -->
-                    <!-- <span class="value">{{ displayTemp(tempUnit, stats.highestTemp) }}</span> -->
-                    <!-- <span class="unit">°{{ tempUnit }}</span> -->
                 </li>
             </ul>
         </div>
