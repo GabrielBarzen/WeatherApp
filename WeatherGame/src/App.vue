@@ -4,24 +4,7 @@
     import Footer from "./components/Footer.vue"
     import ApiTicker from "./components/ApiTicker.vue"
 
-    let stats = {
-        "highestTemp" : null,
-        "lowestTemp" : null,
-        "rainyDays" : null,
-        "snowyDays" : null
-    };
 
-    if (localStorage.getItem("stats") == null) {
-        localStorage.setItem("stats",JSON.stringify(stats));
-    }
-
-    if (localStorage.getItem("tempUnit") == null) {
-        localStorage.setItem("tempUnit","C");
-    }
-
-    if (localStorage.getItem("weatherHistory") == null) {
-        localStorage.setItem("weatherHistory","");
-    } 
     
     function updateWeather(weatherData) {
         console.log("UPDATING WEATHER");
