@@ -120,7 +120,7 @@
         let windDirectionData = currentTimeParameters.parameters[13];
         let percipitationCategoryData = currentTimeParameters.parameters[1];
         let horizontalVisibilityData = currentTimeParameters.parameters[12];
-        let frozenPercipitationPercentageData = frozenPercipitationPercentageData.parameters[0];
+        let frozenPercipitationPercentageData = currentTimeParameters.parameters[0];
 
         let weather = {};
         let temperature = {value:tempData.values[0] , unit:tempData.unit };
