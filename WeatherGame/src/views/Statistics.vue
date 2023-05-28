@@ -31,7 +31,7 @@
         }
     }
 
-    localStorage["stats"] = JSON.stringify(stats);
+    localStorage.setItem("stats",JSON.stringify(stats));
 </script>
 
 <template>
