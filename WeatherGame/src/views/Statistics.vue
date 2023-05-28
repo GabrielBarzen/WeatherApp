@@ -1,12 +1,6 @@
 <script setup>
     let tempUnit = localStorage["tempUnit"];
-
-    let stats = {
-        "highestTemp" : null,
-        "lowestTemp" : null,
-        "rainyDays" : null,
-        "snowyDays" : null
-    };
+    let stats = {};
 
     function displayTemp(unit, temp) {
         if (unit == "Cel" || unit == "C") {
@@ -21,11 +15,7 @@
         }
     }
 
-    if (localStorage["stats"] == null) {
-        localStorage["stats"] = JSON.stringify(stats);
-    } else {
-        stats = JSON.parse(localStorage["stats"]);
-    }
+    stats = JSON.parse(localStorage["stats"]);
     
     let allHistory = JSON.parse(localStorage.getItem("weatherHistory"));
 

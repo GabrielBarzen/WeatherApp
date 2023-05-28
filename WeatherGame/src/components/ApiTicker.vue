@@ -148,11 +148,7 @@
     function storeWeatherData(dateTime, data) {
         let localStorageHistory = {};
 
-        if (localStorage["weatherHistory"] == null) {
-            localStorage["weatherHistory"] = "";
-        }  else {
-            localStorageHistory = JSON.parse(localStorage["weatherHistory"]);
-        }
+        localStorageHistory = JSON.parse(localStorage["weatherHistory"]);
 
         localStorageHistory[dateTime] = data;
         localStorage["weatherHistory"] = JSON.stringify(localStorageHistory);
