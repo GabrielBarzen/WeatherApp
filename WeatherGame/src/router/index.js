@@ -15,7 +15,7 @@ const routes = [
 const router = createRouter({
     history: createWebHistory(),
     routes: routes,
-    linkActiveClass: "bg-gray-900 text-white"
+    linkActiveClass: "bg-background-highlight"
 })
 
 export default router

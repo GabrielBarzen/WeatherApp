@@ -82,7 +82,7 @@
 <template>
 
     <div v-if="props.weather.temperature != null" id="weather-content" class="relative mt-40 flex flex-col justify-center items-center content-center">
-        <div id="location" class="text-2xl">
+        <div id="location" class="text-2xl bg-secondary-background">
             {{ location }}
         </div>
 

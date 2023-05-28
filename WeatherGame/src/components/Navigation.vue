@@ -15,7 +15,7 @@
 </script>
 
 <template>
-    <Disclosure as="nav" class="bg-gray-800" v-slot="{ open }">
+    <Disclosure as="nav" class="" v-slot="{ open }">
         <div class="mx-auto max-w-7xl px-2 md:px-6 lg:px-8">
             <div class="relative flex h-16 items-center justify-between">
                 
@@ -30,18 +30,18 @@
 
                 <div class="flex flex-1 items-center justify-center md:items-stretch md:justify-start">
                     <div class="flex flex-shrink-0 items-center">
-                        <p class="text-white">Weather App</p>
+                        <p class="text-text-highlight">Weather App</p>
                     </div>
                     <div class="hidden md:ml-6 md:block">
                     <div class="flex space-x-4">
-                        <router-link v-for="item in navigation" :key="item.name" :to="item.to" :class="['text-gray-300 hover:bg-gray-700 hover:text-white', 'rounded-md px-3 py-2 text-md font-medium']" :aria-current="item.current ? 'page' : undefined">{{ item.name }}</router-link>
+                        <router-link v-for="item in navigation" :key="item.name" :to="item.to" :class="['text-text-color hover:bg-background-highlight', 'rounded-md px-3 py-2 text-md font-medium']" :aria-current="item.current ? 'page' : undefined">{{ item.name }}</router-link>
 
                     </div>
                     </div>
                 </div>
                     <!-- <ApiTicker/> -->
                 <div class="absolute inset-y-0 right-0 flex items-center pr-2 md:static md:inset-auto md:ml-6 md:pr-0">
-                    <router-link type="button" to="/settings" class="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none">
+                    <router-link type="button" to="/settings" class="rounded-full p-1 text-text-color hover:bg-background-highlight">
                         <Cog6ToothIcon class="h-6 w-6" aria-hidden="true"/>
                     </router-link>
                 </div>
