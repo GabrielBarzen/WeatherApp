@@ -1,16 +1,18 @@
 <script setup>
-    import { ref } from 'vue'
+    import { ref, onMounted } from 'vue'
     import Navigation from "./components/Navigation.vue"
     import Footer from "./components/Footer.vue"
     import ApiTicker from "./components/ApiTicker.vue"
+    import AchivementListener from "./components/AchievementListener.vue"
 
 
-    
     function updateWeather(weatherData) {
         console.log("UPDATING WEATHER");
         localWeatherData.value = weatherData;
         storeWeatherData(weatherData);
     }
+    const weatherDataChangeListener = ref(null);
+    
     function storeWeatherData(weatherData) {
         let localStorageHistory = {};
 
@@ -21,8 +23,11 @@
         localStorageHistory[weatherData.time] = weatherData;
         localStorage.setItem("weatherHistory",JSON.stringify(localStorageHistory));
         localStorage.setItem("stats",JSON.stringify(weatherData));
+        console.log(weatherDataChangeListener.value)
+        weatherDataChangeListener.value.updateAchievements();
     }
     let localWeatherData = ref({});
+
 </script>
 
 <template>
@@ -32,7 +37,7 @@
         </div>
         <div class="flex-grow">
             <main >
-                <router-view :weather="localWeatherData" />
+                <router-view :weather="localWeatherData"/>
             </main>
         </div>
         <div class="relative">
@@ -41,6 +46,7 @@
         </div>
     </div>
     <ApiTicker  @weather="updateWeather"></ApiTicker>
+    <AchivementListener ref="weatherDataChangeListener"></AchivementListener>
 </template>
 
 <style scoped>
