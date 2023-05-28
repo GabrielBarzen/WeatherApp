@@ -5,7 +5,7 @@
 </script>
 
 <template>
-    <li v-if="unlocked" class="achievment-container flex flex-col p-4 m-4 h-80 min-h-full rounded shadow bg-green-500 md:bg-red-800">
+    <li v-if="unlocked" class="achievment-container flex flex-col p-4 m-4 h-80 min-h-full rounded shadow bg-green-500 md:max-w-7xl md:mx-auto">
         <img class="achievement-badge" :src="props.image" />
         <div class="achievement-text flex flex-col py-2">
             <span class="achievement-title text-center line-clamp-1 text-lg font-medium">{{ props.title }}</span>
@@ -13,7 +13,7 @@
         </div>
     </li>
 
-    <li v-else class="achievment-container flex flex-col p-4 m-4 h-80 min-h-full rounded shadow bg-gray-300 md:bg-red-800 opacity-50">
+    <li v-else class="achievment-container flex flex-col p-4 m-4 h-80 min-h-full rounded shadow bg-gray-300 opacity-50 md:max-w-7xl md:mx-auto">
         <img class="achievement-badge opacity-50" src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn1.iconfinder.com%2Fdata%2Ficons%2Fhawcons%2F32%2F698630-icon-114-lock-512.png&f=1&nofb=1&ipt=226e3db9ebcb9093504b449228f135aea00dafd36debc68be962230d5a9ca272&ipo=images" />
         <div class="achievement-text flex flex-col py-2">
             <span class="achievement-title text-center line-clamp-1 text-lg font-medium">{{ props.title }}</span>

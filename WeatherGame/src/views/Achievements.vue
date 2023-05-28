@@ -54,7 +54,7 @@ setAchievements();
 <template>
     <div class="flex flex-col items-center">
         <h1 class="text-3xl mt-8 mb-1 text-left">Achievements</h1>
-        <ul id="achievement-list" class="min-w-full">
+        <ul id="achievement-list" class="min-w-full md:px-4">
             <Achievement v-for="achievement in achievements" 
             :title="achievement.title" 
             :unlocked="achievement.unlocked" 
