@@ -4,24 +4,7 @@
     import Footer from "./components/Footer.vue"
     import ApiTicker from "./components/ApiTicker.vue"
 
-    let stats = {
-        "highestTemp" : null,
-        "lowestTemp" : null,
-        "rainyDays" : null,
-        "snowyDays" : null
-    };
 
-    if (localStorage.getItem("stats") == null) {
-        localStorage.setItem("stats",JSON.stringify(stats));
-    }
-
-    if (localStorage.getItem("tempUnit") == null) {
-        localStorage.setItem("tempUnit","C");
-    }
-
-    if (localStorage.getItem("weatherHistory") == null) {
-        localStorage.setItem("weatherHistory","");
-    } 
     
     function updateWeather(weatherData) {
         console.log("UPDATING WEATHER");
@@ -43,12 +26,21 @@
 </script>
 
 <template>
-    <Navigation />
-    <main class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-        <router-view :weather="localWeatherData" />
-    </main>
+    <div class="flex flex-col h-screen">
+        <div>
+            <Navigation />
+        </div>
+        <div class="flex-grow">
+            <main >
+                <router-view :weather="localWeatherData" />
+            </main>
+        </div>
+        <div class="relative">
+            <Footer class="h-16 text-xl"/>
+
+        </div>
+    </div>
     <ApiTicker  @weather="updateWeather"></ApiTicker>
-    <Footer class="absolute inset-x-0 bottom-0 h-16" />
 </template>
 
 <style scoped>

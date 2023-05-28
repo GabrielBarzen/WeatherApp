@@ -38,51 +38,53 @@
     // {"value":14.9,"unit":"Cel","name":"Temperature"}
 
     //{"temperature":{"value":14.9,"unit":"Cel","name":"Temperature"},"airPressure":{"value":1021.5,"unit":"hPa","name":"Air pressure"},"weatherSymbolInteger":{"value":1,"unit":"category","name":"Weather symbol"},"windSpeed":{"value":4.7,"unit":"m/s","name":"Wind speed"},"windDirection":{"value":313,"unit":"degree","name":"Wind direction"},"percipitationCategory":{"value":0,"unit":"category","name":"Weather category"},"horizontalVisibility":{"value":65,"unit":"km","name":"Horizontal visibility"},"frozenPercipitationPercentage":{"value":-9,"unit":"percent","name":"Hail percentage"},"time":"2023-05-28T16:00:00Z"}
+    let printStatistics = {};
+    if (localStorage.getItem("stats") != null){
+        const statistics = JSON.parse(localStorage.getItem("stats"))
+        printStatistics = statistics;
 
-    const statistics = JSON.parse(localStorage.getItem("stats"))
-    let printStatistics = statistics;
+        let hideList = ["Weather symbol", "Weather category"]
+        printStatistics = Object.entries(printStatistics).filter((item) => {
+            if (hideList.includes(item[1].name) || item[1].name == undefined ){
+                return false;
+            }
+            return true;
+        })
 
-    let hideList = ["Weather symbol", "Weather category"]
-    printStatistics = Object.entries(printStatistics).filter((item) => {
-        if (hideList.includes(item[1].name) || item[1].name == undefined ){
-            return false;
+        let history = JSON.parse(localStorage.getItem("weatherHistory"));
+        console.log(history)
+        printStatistics = Object.fromEntries(printStatistics);
+        let tempHistoricLow = Number.MAX_VALUE;
+        let tempHistoricHigh = Number.MIN_VALUE;
+        let entries = Object.entries(history);
+        
+        entries.forEach(element => {
+            if (element[1].temperature.value < tempHistoricLow) tempHistoricLow = element[1].temperature.value;
+            if (element[1].temperature.value > tempHistoricHigh) tempHistoricHigh = element[1].temperature.value;
+        });
+     
+        printStatistics.tempHistoricLow = {
+            name:"Temperature historical low",
+            unit:printStatistics.temperature.unit,
+            value:tempHistoricLow,
         }
-        return true;
-    })
+        printStatistics.tempHistoricHigh = {
+            name:"Temperature historical High",
+            unit:printStatistics.temperature.unit,
+            value:tempHistoricHigh,
+        }
 
-    let history = JSON.parse(localStorage.getItem("weatherHistory"));
-    console.log(history)
-    printStatistics = Object.fromEntries(printStatistics);
-    let tempHistoricLow = Number.MAX_VALUE;
-    let tempHistoricHigh = Number.MIN_VALUE;
-    let entries = Object.entries(history);
-    
-    entries.forEach(element => {
-        if (element[1].temperature.value < tempHistoricLow) tempHistoricLow = element[1].temperature.value;
-        if (element[1].temperature.value > tempHistoricHigh) tempHistoricHigh = element[1].temperature.value;
-    });
- 
-    printStatistics.tempHistoricLow = {
-        name:"Temperature historical low",
-        unit:printStatistics.temperature.unit,
-        value:tempHistoricLow,
+        printStatistics = ref(printStatistics);
+
+        console.log("=========")
     }
-    printStatistics.tempHistoricHigh = {
-        name:"Temperature historical High",
-        unit:printStatistics.temperature.unit,
-        value:tempHistoricHigh,
-    }
-
-    printStatistics = ref(printStatistics);
-
-    console.log("=========")
 </script>
 
 <template>
     <h1 class="text-2xl p-2" >Statistics</h1>
     <div id="stats-container" class="p-2">
         <div id="temp-box" v-for="item in printStatistics">
-            <ul id="temp-list" class="p-3 bg-gray-700 m-1 rounded text-xl">
+            <ul id="temp-list" class="p-3 bg-secondary-background m-1 rounded text-xl">
                 <li id="highest-temp" class=" flex justify-between">
                     <span>{{item.name}}:     </span>
                     <span>{{item.value}} {{item.unit}}</span>
