@@ -26,12 +26,21 @@
 </script>
 
 <template>
-    <Navigation />
-    <main class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-        <router-view :weather="localWeatherData" />
-    </main>
+    <div class="flex flex-col h-screen">
+        <div>
+            <Navigation />
+        </div>
+        <div class="flex-grow">
+            <main >
+                <router-view :weather="localWeatherData" />
+            </main>
+        </div>
+        <div class="relative">
+            <Footer class="h-16 text-xl"/>
+
+        </div>
+    </div>
     <ApiTicker  @weather="updateWeather"></ApiTicker>
-    <Footer class="absolute inset-x-0 bottom-0 h-16" />
 </template>
 
 <style scoped>
