@@ -116,24 +116,30 @@
         let tempData = currentTimeParameters.parameters[10];
         let airPressureData = currentTimeParameters.parameters[11];
         let weatherSymbolIntegerData = currentTimeParameters.parameters[18];
-        let windSpeedData = currentTimeParameters.parameters[14]
-        let windDirectionData = currentTimeParameters.parameters[13]
-        let percipitationCategoryData = currentTimeParameters.parameters[1]
+        let windSpeedData = currentTimeParameters.parameters[14];
+        let windDirectionData = currentTimeParameters.parameters[13];
+        let percipitationCategoryData = currentTimeParameters.parameters[1];
+        let horizontalVisibilityData = currentTimeParameters.parameters[12];
+        let frozenPercipitationPercentageData = frozenPercipitationPercentageData.parameters[0];
 
         let weather = {};
-        let temperature = {value:tempData.values[0] , unit:tempData.unit }
-        let airPressure = {value:airPressureData.values[0] , unit:airPressureData.unit }
-        let weatherSymbolInteger = {value:weatherSymbolIntegerData.values[0] , unit:weatherSymbolIntegerData.unit }
-        let windSpeed = {value:windSpeedData.values[0] , unit:windSpeedData.unit }
-        let windDirection = {value:windDirectionData.values[0] , unit:windDirectionData.unit }
-        let percipitationCategory = {value:percipitationCategoryData.values[0],unit:percipitationCategoryData.unit}
+        let temperature = {value:tempData.values[0] , unit:tempData.unit };
+        let airPressure = {value:airPressureData.values[0] , unit:airPressureData.unit };
+        let weatherSymbolInteger = {value:weatherSymbolIntegerData.values[0] , unit:weatherSymbolIntegerData.unit };
+        let windSpeed = {value:windSpeedData.values[0] , unit:windSpeedData.unit };
+        let windDirection = {value:windDirectionData.values[0] , unit:windDirectionData.unit };
+        let percipitationCategory = {value:percipitationCategoryData.values[0],unit:percipitationCategoryData.unit};
+        let horizontalVisibility = {value:horizontalVisibilityData.values[0], unit:horizontalVisibilityData.unit};
+        let frozenPercipitationPercentage = {value:frozenPercipitationPercentageData.values[0], unit:frozenPercipitationPercentageData.unit};
 
         weather.temperature = temperature;
         weather.airPressure = airPressure;
         weather.weatherSymbolInteger = weatherSymbolInteger;
         weather.windSpeed = windSpeed;
         weather.windDirection = windDirection;
-        weather.percipitationCategory = percipitationCategory
+        weather.percipitationCategory = percipitationCategory;
+        weather.horizontalVisibility = horizontalVisibility;
+        weather.frozenPercipitationPercentage = frozenPercipitationPercentage
 
         currentWeatherObj = weather;
         
