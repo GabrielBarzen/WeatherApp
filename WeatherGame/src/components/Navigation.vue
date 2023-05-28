@@ -39,7 +39,6 @@
                     </div>
                     </div>
                 </div>
-                    <!-- <ApiTicker/> -->
                 <div class="absolute inset-y-0 right-0 flex items-center pr-2 md:static md:inset-auto md:ml-6 md:pr-0">
                     <router-link type="button" to="/settings" class="rounded-full p-1 text-text-color hover:bg-background-highlight">
                         <Cog6ToothIcon class="h-6 w-6" aria-hidden="true"/>
