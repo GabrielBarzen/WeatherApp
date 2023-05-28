@@ -34,7 +34,7 @@
                     </div>
                     <div class="hidden md:ml-6 md:block">
                     <div class="flex space-x-4">
-                        <router-link v-for="item in navigation" :key="item.name" :to="item.to" :class="['text-text-color hover:bg-background-highlight', 'rounded-md px-3 py-2 text-md font-medium']" :aria-current="item.current ? 'page' : undefined">{{ item.name }}</router-link>
+                        <router-link v-for="item in navigation" :key="item.name" :to="item.to" :class="['text-text-color hover:bg-primary-background ', 'rounded-md px-3 py-2 text-md font-medium']" :aria-current="item.current ? 'page' : undefined">{{ item.name }}</router-link>
 
                     </div>
                     </div>
@@ -49,7 +49,7 @@
 
         <DisclosurePanel class="md:hidden" v-slot="{close}">
             <div class="space-y-1 px-2 pb-3 pt-2">
-                <router-link @click="close()" v-for="item in navigation" :key="item.name" :to="item.to" :class="['text-gray-300 hover:bg-gray-700 hover:text-white', 'block rounded-md px-3 py-2 text-base font-medium']" :aria-current="item.current ? 'page' : undefined">{{ item.name }}</router-link>
+                <router-link @click="close()" v-for="item in navigation" :key="item.name" :to="item.to" :class="['text-text-color hover:bg-primary-background ', 'block rounded-md px-3 py-2 text-base font-medium']" :aria-current="item.current ? 'page' : undefined">{{ item.name }}</router-link>
             </div>
         </DisclosurePanel>
     </Disclosure>
