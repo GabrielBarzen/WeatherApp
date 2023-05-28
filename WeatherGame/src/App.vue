@@ -11,29 +11,41 @@
         "snowyDays" : null
     };
 
-    if (localStorage["stats"] == null) {
-        localStorage["stats"] = JSON.stringify(stats);
+    if (localStorage.getItem("stats") == null) {
+        localStorage.setItem("stats",JSON.stringify(stats));
     }
 
-    if (localStorage["tempUnit"] == null) {
-        localStorage["tempUnit"] = "C";
+    if (localStorage.getItem("tempUnit") == null) {
+        localStorage.setItem("tempUnit","C");
     }
 
-    if (localStorage["weatherHistory"] == null) {
-        localStorage["weatherHistory"] = "";
+    if (localStorage.getItem("weatherHistory") == null) {
+        localStorage.setItem("weatherHistory","");
     } 
     
-    function updateWeather(data) {
+    function updateWeather(weatherData) {
         console.log("UPDATING WEATHER");
-        weatherData.value = data;
+        localWeatherData.value = weatherData;
+        storeWeatherData(weatherData);
     }
-    let weatherData = ref({});
+    function storeWeatherData(weatherData) {
+        let localStorageHistory = {};
+
+        if (localStorage.getItem("weatherHistory") != null) {
+            localStorageHistory = JSON.parse(localStorage.getItem("weatherHistory"));
+        }
+        
+        localStorageHistory[weatherData.time] = weatherData;
+        localStorage.setItem("weatherHistory",JSON.stringify(localStorageHistory));
+        localStorage.setItem("stats",JSON.stringify(weatherData));
+    }
+    let localWeatherData = ref({});
 </script>
 
 <template>
     <Navigation />
     <main class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-        <router-view :weather="weatherData" />
+        <router-view :weather="localWeatherData" />
     </main>
     <ApiTicker  @weather="updateWeather"></ApiTicker>
     <Footer class="absolute inset-x-0 bottom-0 h-16" />
