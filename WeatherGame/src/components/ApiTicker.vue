@@ -135,10 +135,29 @@
         weather.windDirection = windDirection;
         weather.percipitationCategory = percipitationCategory
 
-        console.log(weather);
         currentWeatherObj = weather;
         
+        let dateTime = currentTimeParameters.validTime;
+        storeWeatherData(dateTime, currentWeatherObj);
+
+        printLocalStorageSize()
+        
         emit('weather',currentWeatherObj);
+    }
+
+    function storeWeatherData(dateTime, data) {
+        let localStorageHistory = {};
+
+        localStorageHistory = JSON.parse(localStorage["weatherHistory"]);
+
+        localStorageHistory[dateTime] = data;
+        localStorage["weatherHistory"] = JSON.stringify(localStorageHistory);
+    }
+
+
+    function printLocalStorageSize() {
+        var _lsTotal = 0,_xLen,_x;for(_x in localStorage){ if(!localStorage.hasOwnProperty(_x)){continue;} _xLen= ((localStorage[_x].length + _x.length)* 2);_lsTotal+=_xLen; console.log(_x.substr(0,50)+" = "+ (_xLen/1024).toFixed(2)+" KB")};console.log("Total = " + (_lsTotal / 1024).toFixed(2) + " KB");
+        console.log(_lsTotal);
     }
 
 // 0 : Object { name: "spp"     , Percent of precipitation in frozen form
