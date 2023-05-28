@@ -22,12 +22,12 @@
     }
 
     if (localStorage["stats"] == null) {
-        localStorage["stats"] = stats;
+        localStorage["stats"] = JSON.stringify(stats);
     } else {
         stats = JSON.parse(localStorage["stats"]);
     }
     
-    let allHistory = JSON.parse(localStorage["weatherHistory"]);
+    let allHistory = JSON.parse(localStorage.getItem("weatherHistory"));
 
     for (let key of Object.keys(allHistory)) {
         let data = allHistory[key];
