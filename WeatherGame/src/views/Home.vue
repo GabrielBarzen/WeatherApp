@@ -37,13 +37,9 @@
     let img = new URL(`@/assets/1.png`, import.meta.url).href
 
     watch(props,(oldval,newval) => {
-        console.log(props.weather.weatherSymbolInteger.value)
-        console.log(`@/assets/${props.weather.weatherSymbolInteger.value}.png`)
-        console.log(img)
         let conditionIndex = props.weather.weatherSymbolInteger.value
         img = conditions[conditionIndex].url;
         condition = conditions[conditionIndex].name
-        console.log(img)
         windDirection = convertWindDirection(props.weather.windDirection.value)
 
     }) 
