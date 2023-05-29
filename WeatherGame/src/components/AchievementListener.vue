@@ -1,5 +1,6 @@
 <script setup>
     import {ref, defineExpose} from "vue";
+    import popup from "./AchievementPopup.vue"
     let achievementTemplate = ([
         {
             id : 0,
@@ -51,7 +52,8 @@
 
 
     function updateAchievements() {
-        console.log("CHECKING ACHIEVEMENTS")
+        console.log("CHECKING ACHIEVEMENTS");
+        template: `<popup :title="hi"/>`;
         let historicalData = JSON.parse(localStorage.getItem("weatherHistory"));
         let historicalDataEntries = Object.entries(historicalData);
         achievementTemplate.forEach(achievement => {
@@ -65,7 +67,10 @@
                         let achievements = JSON.parse(localStorage.getItem("achievements"));
                         if (!achievements[achievement.id].unlocked) {
                             //Put code for achievement popup here
-                            alert("achievement get: "+ achievements[achievement.id].title+"\n"+achievements[achievement.id].description)
+                            const template = `<popup title=${achievements[achievement.id].title}></popup>`;
+                            console.log(template);
+                            template;
+                            //alert("achievement get: "+ achievements[achievement.id].title+"\n"+achievements[achievement.id].description)
                             achievements[achievement.id].unlocked = true
                         };
                         localStorage.setItem("achievements",JSON.stringify(achievements));
@@ -78,3 +83,7 @@
         updateAchievements,
     })
 </script>
+
+<!--<template>
+    <popup title="huef"></popup>
+</template>-->
