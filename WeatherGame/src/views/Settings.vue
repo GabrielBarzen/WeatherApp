@@ -12,9 +12,15 @@
 
     function confirmButton () {
         //clear local storage
+        //website doesn't work until you refresh it afterwards
+        localStorage.clear()
         pressButton();
     }
 
+    function tempUnit () {
+        console.log(tempUnit);
+        
+    }
 
 </script>
 
@@ -41,7 +47,7 @@
             type="button"
             class="rounded bg-gray-50 px-4 py-2 text-sm font-medium text-gray-600"
         >
-            No, go back
+        No, go back
         </button>
         </div>
     </div>

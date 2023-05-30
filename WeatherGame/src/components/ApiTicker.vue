@@ -21,7 +21,7 @@
     function tickWeatherApi() {
         navigator.geolocation.getCurrentPosition(
             (success) => checkWeatherApiRequest(success), 
-            (error) => geoLocationError(error));   
+            (error) => geoLocationError(error));
     }
 
     function checkWeatherApiRequest(success) {
