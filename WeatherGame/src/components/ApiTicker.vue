@@ -8,11 +8,11 @@
     let enabled = ref(true);
     let intervalID;
     let currentWeatherObj = null;
-    toggleTicker();
     tickWeatherApi();
+    toggleTicker();
     function toggleTicker() {
         if (enabled.value == true) {
-            intervalID = window.setInterval(tickWeatherApi,100000);
+            intervalID = window.setInterval(tickWeatherApi,10000);
         } else {
             window.clearInterval(intervalID);
         }
@@ -25,15 +25,18 @@
     }
 
     function checkWeatherApiRequest(success) {
+        console.log("=RUNNING CHECK BEFORE CALL API=")
         let currentTime = Date.now();
         let currentLocation = success;
         previousLocation = success;
         if (previousTime === null || previousLocation === null) {
             previousLocation = currentLocation;
             makeApiRequest(currentLocation.coords.latitude,currentLocation.coords.longitude);
-        } else if ((currentTime - previousTime) > 600000) {
+            return;
+        } else if ((currentTime - previousTime) > 60000) {
             previousLocation = currentLocation;
             makeApiRequest(currentLocation.coords.latitude,currentLocation.coords.longitude);
+            return;
         } else {
             var previousCoord = previousLocation.coords;
             var currentCoord = currentLocation.coords;
@@ -42,12 +45,13 @@
                 previousCoord.longitude,
                 currentCoord.latitude,
                 currentCoord.longitude)
-            console.log(distanceInKm)
-            if (distanceInKm > 1) {
+            if (distanceInKm > 0.5) {
                 previousLocation = currentLocation;
                 makeApiRequest(currentLocation.coords.latitude,currentLocation.coords.longitude);
+                return;
             }
         }
+        console.log("=CONDITIONS NOT MET, MOVE OR WAIT=")
     }
 
     function makeApiRequest(currentLatitude, currentLongitude) {
@@ -65,24 +69,16 @@
     function geoLocationError(error) {
         let errorData = {}
         errorData.message = error;
-        console.log("===error===")
-        console.log(error)
         emit('weather', errorData);
     }
 
     function apiRequestError(error) {
         let errorData = {}
         errorData.message = error;
-        console.log("===error===")
-        console.log(error)
         emit('weather', errorData);
     }
 
     function getDistanceFromLatLonInKm(latitudeFrom,longitudeFrom,latitudeTo,longitudeTo) {
-        console.log(latitudeFrom)
-        console.log(latitudeTo)
-        console.log(longitudeFrom)
-        console.log(longitudeTo)
       var R = 6371; // Radius of the earth in km
       var distanceLatitude = degreeToRadian(latitudeTo-latitudeFrom);  // deg2rad below
       var distanceLongitude = degreeToRadian(longitudeTo-longitudeFrom); 
@@ -105,10 +101,7 @@
         const timeWithinHour = jsonData.timeSeries.filter((item) => {
             return Date.parse(item.validTime) - Date.now() < 6000000
         })
-        console.log("NOW====")
         const currentTimeParameters = timeWithinHour[timeWithinHour.length-1]
-        console.log(currentTimeParameters)
-        console.log("======")
         processTimeParameters(currentTimeParameters);
     }
 
@@ -145,7 +138,7 @@
         currentWeatherObj = weather;
         
 
-        printLocalStorageSize()
+        //printLocalStorageSize()
         
         emit('weather',currentWeatherObj);
     }
