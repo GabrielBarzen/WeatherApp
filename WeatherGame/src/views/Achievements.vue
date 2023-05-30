@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from "vue";
 import Achievement from "../components/Achievement.vue"
+import popup from "../components/AchievementPopup.vue"
 
 
 // let achievements = ref([
