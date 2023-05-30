@@ -4,9 +4,18 @@
     import Footer from "./components/Footer.vue"
     import ApiTicker from "./components/ApiTicker.vue"
     import AchivementListener from "./components/AchievementListener.vue"
-    import pop from "./components/AchievementPopup.vue"
+
+    let tempUnit = localStorage.getItem("tempUnit");
+    if (tempUnit == null) {
+        localStorage.setItem("tempUnit", "C");
+    }
+
 
     function updateWeather(weatherData) {
+        tempUnit = localStorage.getItem("tempUnit");
+        if (tempUnit == null) {
+            localStorage.setItem("tempUnit", "C");
+        }
         console.log("UPDATING WEATHER");
         localWeatherData.value = weatherData;
         storeWeatherData(weatherData);
