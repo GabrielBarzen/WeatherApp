@@ -49,19 +49,15 @@
         </div>
     </div>
 
-
-
-
-
-        <h1 class="text-2xl p-4 m-1">Settings</h1>
+        <h1 class="text-2xl py-2 px-3">Settings</h1>
             <div id="settings-container" class="">
-                <ul class="p-4 m-1 text-lg">
-                    <li class="flex justify-between items-center bg-secondary-background p-4 my-4 rounded max-sm:flex-col">
+                <ul class="py-2 px-3 text-lg">
+                    <li class="flex justify-between items-center bg-secondary-background p-4 rounded max-sm:flex-col">
                         <span class="max-sm:mb-2">Temperature Unit</span>
                         <Toggle val1="C" val2="F" name="tempUnit" />
                     </li>
                 </ul>
-                <div class="flex justify-center mt-8">
+                <div class="flex justify-center mt-6">
                     <DeleteButton v-on:click="pressButton" buttonText="Delete all my data" class="" />
                 </div>
             </div>
