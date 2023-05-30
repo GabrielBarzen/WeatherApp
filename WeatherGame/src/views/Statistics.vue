@@ -87,15 +87,17 @@
 </script>
 
 <template>
-    <h1 class="text-2xl p-2" >Statistics</h1>
-    <div id="stats-container" class="p-2">
-        <div id="temp-box" v-for="item in printStatistics">
-            <ul id="temp-list" class="p-3 bg-secondary-background m-1 rounded text-xl">
-                <li id="highest-temp" class=" flex justify-between">
-                    <span>{{item.name}}:     </span>
-                    <span>{{item.value}} {{item.unit}}</span>
-                </li>
-            </ul>
+    <div class="md:max-w-7xl mx-auto">
+        <h1 class="text-2xl py-2 px-3" >Statistics</h1>
+        <div id="stats-container" class="p-2">
+            <div id="temp-box" v-for="item in printStatistics">
+                <ul id="temp-list" class="p-3 bg-secondary-background m-1 rounded text-xl">
+                    <li id="highest-temp" class=" flex justify-between">
+                        <span>{{item.name}}:     </span>
+                        <span>{{item.value}} {{item.unit}}</span>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 

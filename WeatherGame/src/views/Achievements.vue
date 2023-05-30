@@ -41,16 +41,18 @@ setAchievements();
 </script>
 
 <template>
-    <div class="flex flex-col items-center">
-        <h1 class="text-3xl  mt-8 mb-1 text-left">Achievements</h1>
-        <ul id="achievement-list" class="min-w-full md:px-4">
-            <Achievement v-for="achievement in achievements" 
-            :title="achievement.title" 
-            :unlocked="achievement.unlocked" 
-            :description="achievement.description" 
-            :image="achievement.image"
-            />
-        </ul>
+    <div class="md:max-w-7xl mx-auto">
+        <h1 class="text-2xl py-2 px-3">Achievements</h1>
+        <div class="flex flex-col items-center">
+            <ul id="achievement-list" class="min-w-full md:px-3">
+                <Achievement v-for="achievement in achievements" 
+                :title="achievement.title" 
+                :unlocked="achievement.unlocked" 
+                :description="achievement.description" 
+                :image="achievement.image"
+                />
+            </ul>
+        </div>
     </div>
 </template>
 
