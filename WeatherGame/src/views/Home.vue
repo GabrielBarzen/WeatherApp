@@ -1,6 +1,6 @@
 <script setup>
     import { ref, watch } from 'vue'
-    const props = defineProps(['weather'])
+ const props = defineProps(['weather'])
 
     let conditions = {
         1 : {name:"Clear sky",url:new URL('../assets/1.png', import.meta.url).href},
@@ -100,7 +100,7 @@
 </script>
 
 <template>
-
+    
     <div v-if="props.weather.temperature != null" id="weather-content" class="relative mt-40 flex flex-col justify-center items-center content-center">
         <div id="location" class="text-2xl bg-secondary-background">
             {{ location }}

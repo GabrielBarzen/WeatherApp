@@ -4,7 +4,7 @@
     import Footer from "./components/Footer.vue"
     import ApiTicker from "./components/ApiTicker.vue"
     import AchivementListener from "./components/AchievementListener.vue"
-
+    import pop from "./components/AchievementPopup.vue"
 
     function updateWeather(weatherData) {
         console.log("UPDATING WEATHER");

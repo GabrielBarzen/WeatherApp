@@ -1,5 +1,7 @@
 <script setup>
-    import {ref, defineExpose} from "vue";
+    import {ref, defineExpose, defineComponent, createApp} from "vue";
+    import AchievementPopup from '../components/AchievementPopup.vue';
+import { document } from "postcss";
     let achievementTemplate = ([
         {
             id : 0,
@@ -48,10 +50,16 @@
     if (localStorage.getItem("achievements") == null) {
         localStorage.setItem("achievements",JSON.stringify(achievementTemplate))
     }
+    
+    
+    const currentTitle = ref();
+    const currentDescription = ref();
+    const currentImage = ref();
+    const currentShow = ref(false); 
 
 
     function updateAchievements() {
-        console.log("CHECKING ACHIEVEMENTS")
+        console.log("CHECKING ACHIEVEMENTS");
         let historicalData = JSON.parse(localStorage.getItem("weatherHistory"));
         let historicalDataEntries = Object.entries(historicalData);
         achievementTemplate.forEach(achievement => {
@@ -62,19 +70,36 @@
                         entryValues.temperature.value,
                         entryValues.windSpeed.value,
                         entryValues.weatherSymbolInteger.value)) {
+                        console.log("ACHIVEMENT CRITERIA MET")
                         let achievements = JSON.parse(localStorage.getItem("achievements"));
+                        console.log("=== current achievements")
+                        console.log(achievements)
+                        console.log("===")
                         if (!achievements[achievement.id].unlocked) {
-                            //Put code for achievement popup here
-                            alert("achievement get: "+ achievements[achievement.id].title+"\n"+achievements[achievement.id].description)
-                            achievements[achievement.id].unlocked = true
+                            console.log("ACHIVEMENT UNLOCKED")
+                            currentTitle.value = achievements[achievement.id].title
+                            currentDescription.value = achievements[achievement.id].description
+                            currentImage.value = achievements[achievement.id].image
+                            currentShow.value = true
+                            setTimeout(() => {currentShow.value = false},5000)
+                            console.log(currentShow.value)
+                            achievements[achievement.id].unlocked = true;
+                            localStorage.setItem("achievements",JSON.stringify(achievements));
                         };
-                        localStorage.setItem("achievements",JSON.stringify(achievements));
                     }
                 }
             })
         })
     }
+    
+
+
     defineExpose({
         updateAchievements,
     })
+
+    console.log("SHOW : " + currentShow.value)
 </script>
+<template>
+        <AchievementPopup :show="currentShow" :title="currentTitle" :image="currentImage" :description="currentDescription" />
+</template>
