@@ -44,13 +44,11 @@
             image: "https://www.freeiconspng.com/uploads/sweden-icon-32.png"
         },
     ]);
-    
-    if (localStorage.getItem("achievements") == null) {
-        localStorage.setItem("achievements",JSON.stringify(achievementTemplate))
-    }
-
 
     function updateAchievements() {
+        if (localStorage.getItem("achievements") === null) {
+            localStorage.setItem("achievements",JSON.stringify(achievementTemplate))
+        }
         console.log("CHECKING ACHIEVEMENTS")
         let historicalData = JSON.parse(localStorage.getItem("weatherHistory"));
         let historicalDataEntries = Object.entries(historicalData);

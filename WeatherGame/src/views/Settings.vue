@@ -11,7 +11,10 @@
     }
 
     function confirmButton () {
-        //clear local storage
+        //clears local storage
+        //Needs a page refresh to get new achievements, weather and statistics
+        localStorage.clear();
+        location.reload();
         pressButton();
     }
 
