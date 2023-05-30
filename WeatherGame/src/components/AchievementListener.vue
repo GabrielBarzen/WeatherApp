@@ -63,7 +63,11 @@
                         entryValues.windSpeed.value,
                         entryValues.weatherSymbolInteger.value)) {
                         let achievements = JSON.parse(localStorage.getItem("achievements"));
-                        achievements[achievement.id].unlocked = true;
+                        if (!achievements[achievement.id].unlocked) {
+                            //Put code for achievement popup here
+                            alert("achievement get: "+ achievements[achievement.id].title+"\n"+achievements[achievement.id].description)
+                            achievements[achievement.id].unlocked = true
+                        };
                         localStorage.setItem("achievements",JSON.stringify(achievements));
                     }
                 }
