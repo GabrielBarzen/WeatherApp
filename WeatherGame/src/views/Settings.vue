@@ -13,7 +13,9 @@
     function confirmButton () {
         //clear local storage
         //website doesn't work until you refresh it afterwards
-        localStorage.clear()
+        localStorage.removeItem(achievements);
+        localStorage.removeItem(weatherHistory);
+        localStorage.removeItem(stats);
         pressButton();
     }
 
