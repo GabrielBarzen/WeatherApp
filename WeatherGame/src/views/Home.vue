@@ -32,6 +32,7 @@
         27: {name:"Heavy snowfall",url:new URL('../assets/27.png', import.meta.url).href}
     };
     let location = "";
+    let tempUnit = localStorage.getItem("tempUnit");
     let condition;
     let windDirection;
     let img = new URL(`@/assets/1.png`, import.meta.url).href
@@ -84,18 +85,18 @@
     }
 
 
-    // function displayTemp(unit, temp) {
-    //     if (unit == "Cel" || unit == "C") {
-    //         return temp;
-    //
-    //     } else if (unit == "Far" || unit == "F") {
-    //         let farTemp = (temp * (9/5)) + 32;
-    //         return farTemp;    
-    //
-    //     } else {
-    //         throw new Error('Wrong unit. Only C, Cel, F or Far allowed');
-    //     }
-    // }
+    function displayTemp(unit, temp) {
+        if (unit == "Cel" || unit == "C") {
+            return temp;
+    
+        } else if (unit == "Far" || unit == "F") {
+            let farTemp = ((temp * (9/5)) + 32).toFixed(1);
+            return farTemp;    
+    
+        } else {
+            throw new Error('Wrong unit. Only C, Cel, F or Far allowed');
+        }
+    }
 
 </script>
 
@@ -108,10 +109,10 @@
 
         <div id="temperature-container" class="mt-2 mb-3" >
             <span id="temperature" class="text-8xl">
-                <span>{{ props.weather.temperature.value }}</span>
+                <span>{{ displayTemp(tempUnit, props.weather.temperature.value) }}</span>
             </span>
             <span id="temperature-unit" class="text-8xl">
-                <span>°{{ props.weather.temperature.unit }}</span>
+                <span>°{{ tempUnit }}</span>
             </span>
         </div>
 

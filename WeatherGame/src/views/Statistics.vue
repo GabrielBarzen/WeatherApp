@@ -1,21 +1,21 @@
 <script setup>
     import {ref, watch} from 'vue';
     //
-    // let tempUnit = localStorage["tempUnit"];
+    let tempUnit = localStorage["tempUnit"];
     // let stats = {};
-    //
-    // function displayTemp(unit, temp) {
-    //     if (unit == "Cel" || unit == "C") {
-    //         return temp;
-    //
-    //     } else if (unit == "Far" || unit == "F") {
-    //         let farTemp = (temp * (9/5)) + 32;
-    //         return farTemp;    
-    //
-    //     } else {
-    //         throw new Error('Wrong unit. Only C, Cel, F or Far allowed');
-    //     }
-    // }
+    
+    function displayTemp(unit, temp) {
+        if (unit == "Cel" || unit == "C") {
+            return temp;
+    
+        } else if (unit == "Far" || unit == "F") {
+            let farTemp = ((temp * (9/5)) + 32).toFixed(1);
+            return farTemp;    
+    
+        } else {
+            throw new Error('Wrong unit. Only C, Cel, F or Far allowed');
+        }
+    }
     //
     // stats = JSON.parse(localStorage["stats"]);
     // 
@@ -62,16 +62,22 @@
             if (element[1].temperature.value < tempHistoricLow) tempHistoricLow = element[1].temperature.value;
             if (element[1].temperature.value > tempHistoricHigh) tempHistoricHigh = element[1].temperature.value;
         });
+
+        printStatistics.temperature = {
+            name: "Temperature",
+            unit: "°" + tempUnit,
+            value: displayTemp(tempUnit, printStatistics.temperature.value)
+        }
      
         printStatistics.tempHistoricLow = {
-            name:"Temperature historical low",
-            unit:printStatistics.temperature.unit,
-            value:tempHistoricLow,
+            name: "Temperature historical low",
+            unit: "°" + tempUnit,
+            value: displayTemp(tempUnit, tempHistoricLow)
         }
         printStatistics.tempHistoricHigh = {
-            name:"Temperature historical High",
-            unit:printStatistics.temperature.unit,
-            value:tempHistoricHigh,
+            name: "Temperature historical High",
+            unit: "°" + tempUnit,
+            value: displayTemp(tempUnit, tempHistoricHigh)
         }
 
         printStatistics = ref(printStatistics);

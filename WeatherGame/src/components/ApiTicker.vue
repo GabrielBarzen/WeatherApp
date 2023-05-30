@@ -69,7 +69,7 @@
     function geoLocationError(error) {
         let errorData = {}
         errorData.message = error;
-        emit('weather', errorData);
+        console.log(errorData);
     }
 
     function apiRequestError(error) {

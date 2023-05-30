@@ -51,15 +51,16 @@ import { document } from "postcss";
         localStorage.setItem("achievements",JSON.stringify(achievementTemplate))
     }
     
-    
     const currentTitle = ref();
     const currentDescription = ref();
     const currentImage = ref();
     const currentShow = ref(false); 
 
-
     function updateAchievements() {
-        console.log("CHECKING ACHIEVEMENTS");
+        if (localStorage.getItem("achievements") === null) {
+            localStorage.setItem("achievements",JSON.stringify(achievementTemplate))
+        }
+
         let historicalData = JSON.parse(localStorage.getItem("weatherHistory"));
         let historicalDataEntries = Object.entries(historicalData);
         achievementTemplate.forEach(achievement => {
