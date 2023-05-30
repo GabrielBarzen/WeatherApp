@@ -1,5 +1,7 @@
 # WeatherApp
-A gamified weather app where users can see statistics and collect different achievements based on experienced weather data.
+A gamified weather app where users can see statistics and collect different achievements based on experienced weather data. 
+
+Run instructions can be found [here](https://github.com/GabrielModinBarzen/WeatherApp/blob/master/WeatherGame).
 
 <br />
 
